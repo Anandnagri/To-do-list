@@ -1,0 +1,249 @@
+
+/* ------------------ CSS VARIABLES ------------------ */
+:root {
+  --color-bg: #f9f9f9;
+  --color-text: #1e1e1e;
+  --color-primary: #4a90e2;
+  --color-accent: #f5a623;
+  --color-danger: #e74c3c;
+  --color-complete: #2ecc71;
+  --color-border: #dcdcdc;
+  --color-priority: #ffeaa7;
+  --font-base: 'Inter', sans-serif;
+  --shadow-light: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-heavy: 0 4px 14px rgba(0, 0, 0, 0.15);
+  --transition-fast: 0.2s ease-in-out;
+}
+
+/* DARK THEME VARIABLES */
+body.dark {
+  --color-bg: #1c1c1c;
+  --color-text: #f1f1f1;
+  --color-border: #444;
+  --shadow-light: 0 2px 6px rgba(255, 255, 255, 0.05);
+}
+
+/* ------------------ BASE STYLES ------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-base);
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  padding: 1rem 0;
+}
+
+/* ------------------ MAIN CONTAINER ------------------ */
+.todo-app {
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ------------------ FORM ------------------ */
+form#task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#task-form input,
+#task-form textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  transition: border-color var(--transition-fast);
+}
+
+body.dark #task-form input,
+body.dark #task-form textarea {
+  background: #2a2a2a;
+  color: var(--color-text);
+}
+
+#task-form button {
+  padding: 0.75rem;
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+#task-form button:hover {
+  background: #357abd;
+}
+
+/* ------------------ CONTROLS ------------------ */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.controls input,
+.controls button {
+  flex: 1 1 auto;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: white;
+  transition: all var(--transition-fast);
+}
+
+body.dark .controls input,
+body.dark .controls button {
+  background: #2a2a2a;
+  color: var(--color-text);
+}
+
+.controls button:hover {
+  cursor: pointer;
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ------------------ TASK LIST ------------------ */
+#task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-item {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow-light);
+  border-left: 5px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+  position: relative;
+}
+
+.task-item[data-priority="high"] {
+  border-left-color: var(--color-accent);
+  background: var(--color-priority);
+}
+
+.task-item.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+  border-left-color: var(--color-complete);
+}
+
+.task-item:hover {
+  transform: scale(1.01);
+}
+
+/* ------------------ TASK CONTENT ------------------ */
+.task-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.task-desc {
+  font-size: 0.95rem;
+  color: gray;
+}
+
+/* ------------------ TASK ACTIONS ------------------ */
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.task-actions button {
+  border: none;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.task-actions .complete-btn {
+  background: var(--color-complete);
+  color: white;
+}
+
+.task-actions .delete-btn {
+  background: var(--color-danger);
+  color: white;
+}
+
+/* ------------------ DRAGGING STYLES ------------------ */
+.task-item.dragging {
+  opacity: 0.4;
+}
+
+.task-placeholder {
+  height: 80px;
+  border: 2px dashed var(--color-border);
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+}
+
+/* ------------------ MEDIA QUERIES ------------------ */
+@media (min-width: 600px) {
+  .controls {
+    flex-wrap: nowrap;
+  }
+
+  .task-actions {
+    justify-content: flex-start;
+  }
+}
+
+.priority-badge {
+  font-size: 0.75rem;
+  margin-left: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.priority-badge.high {
+  background: #ff4d4d;
+  color: white;
+}
+
+.priority-badge.medium {
+  background: #ffcc00;
+  color: black;
+}
+
+.priority-badge.low {
+  background: #4caf50;
+  color: white;
+}
+
+style.css
+Page 1 of 5
